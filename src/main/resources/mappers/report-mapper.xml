@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="report">
+	<select id="report_cnt" resultType="int">
+		SELECT COUNT(*) FROM report
+	</select>
+	
+	<select id="report_list" parameterType="Map" resultType="reportVO">
+		SELECT * FROM report ORDER BY groups DESC, lev ASC limit #{limit} offset #{offset}
+	</select>
+	
+	<insert id="report_ins" parameterType="reportVO">
+		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
+            SELECT (IFNULL(MAX(report_idx),0)+1) as groups FROM report
+        </selectKey>
+        INSERT INTO report(u_idx, rep_idx, report_status, report_subject, report_content, report_f_name, hit, groups, step, lev, regdate)
+		 VALUES(#{u_idx}, #{rep_idx}, 0, #{report_subject}, #{report_content}, #{report_f_name}, 0, #{groups}, 0, 0, sysdate())
+	</insert>
+	
+	<update id="report_hit" parameterType="String">
+		UPDATE report 
+		 SET hit = hit+1
+		  WHERE report_idx = #{report_idx}
+	</update>
+	
+	<select id="report_detail" parameterType="String" resultType="reportVO">
+		SELECT * FROM report WHERE report_idx = #{report_idx}
+	</select>
+	
+	<update id="report_update" parameterType="reportVO">
+		UPDATE report
+		 SET report_subject=#{report_subject}, report_content=#{report_content}, report_f_name=#{report_f_name}
+		  WHERE report_idx = #{report_idx}
+	</update>
+	
+	<update id="report_lev_update" parameterType="Map">
+		UPDATE report
+		 SET lev=lev+1
+		  WHERE groups=#{groups} and lev>=#{lev}
+	</update>
+	
+	<update id="report_status" parameterType="reportVO">
+		UPDATE report SET report_status = 1 WHERE report_idx = #{report_idx}
+	</update>
+	
+	<insert id="report_ans_insert" parameterType="reportVO">
+		INSERT INTO report(u_idx, rep_idx, report_status, report_subject, report_content, report_f_name, hit, groups, step, lev, regdate)
+		 VALUES(#{u_idx}, #{rep_idx}, 1, #{report_subject}, #{report_content}, #{report_f_name}, 0, #{groups}, #{step}, #{lev}, sysdate())
+	</insert>
+	
+	<update id="report_delete" parameterType="reportVO">
+		UPDATE report SET active = 1 WHERE report_idx = #{report_idx}
+	</update>
+	
+	<delete id="report_ans_delete" parameterType="reportVO">
+		DELETE FROM report WHERE report_idx =#{report_idx}
+	</delete>
+	
+</mapper>
+
+
+
+
+
+
+
+
+

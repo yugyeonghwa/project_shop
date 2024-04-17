@@ -1,0 +1,87 @@
+@charset "UTF-8";
+
+.div {
+	min-height: 600px;
+}
+
+.div>ul {
+	list-style-type: none; /* disc 지우기 */
+	background-color: green;
+	overflow: hidden;
+	margin: 20px auto 0px;
+	width: 55%;
+}
+
+.div>ul>li {
+	float: left; /* 한줄로 만들기(옆으로 퍼지기) */
+	width: 20%;
+	text-align: center;
+	border-left: 1px solid white;
+}
+
+.div>ul>li>a {
+	text-decoration: none; /* 밑줄 지우기 */
+	display: block; /* 블록 레벨로 만들기 */
+	padding: 16px 50px; /* 상하 , 좌우 너비 지정 */
+	color: white; /* 글자색 */
+}
+
+/* 마우스를 올렸을때 변화 */
+.div>ul>li>a:hover {
+	background-color: #333333;
+}
+
+.div>h2 {
+	margin: 30px auto;
+	text-align: center;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+/* ================================= */
+
+.update {
+	width: 600px;
+	margin: 0 auto;
+	
+}
+
+.update fieldset {
+	padding: 15px;
+	border: 1px solid black;
+}
+
+.update legend {
+	font-weight: bold;
+}
+
+.update ul {
+	list-style-type: none;
+	padding-left: 0px;
+}
+
+.update li {
+	margin: 10px;
+}
+
+.update li label {
+	width: 120px;
+	float: left;
+	text-align: left;
+	padding-top: 7px;
+	padding-left: 5px;
+}
+
+.update li:nth-of-type(5) label{
+	padding-top: 0px;
+}
+
+/* 인풋 안에서 타입이 텍스트인 것만 너비를 늘리고 싶다. */
+.update input[type="text"] {
+	width: 300px;
+	padding: 5px;
+}
+.update input[type="password"] {
+	width: 300px;
+	padding: 5px;
+}

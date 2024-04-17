@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+.div {
+	min-height: 600px;
+}
+
+.div>ul {
+	list-style-type: none; /* disc 지우기 */
+	background-color: green;
+	overflow: hidden;
+	margin: 20px auto 0px;
+	width: 55%;
+}
+
+.div>ul>li {
+	float: left; /* 한줄로 만들기(옆으로 퍼지기) */
+	width: 20%;
+	text-align: center;
+	border-left: 1px solid white;
+}
+
+.div>ul>li>a {
+	text-decoration: none; /* 밑줄 지우기 */
+	display: block; /* 블록 레벨로 만들기 */
+	padding: 16px 50px; /* 상하 , 좌우 너비 지정 */
+	color: white; /* 글자색 */
+}
+
+/* 마우스를 올렸을때 변화 */
+.div>ul>li>a:hover {
+	background-color: #333333;
+}
+
+.div>h2 {
+	margin: 30px auto;
+	text-align: center;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+/* ===================================== */
+
+.table {
+	width: 60%;
+	border: black 2px solid;
+	margin: 30px auto;
+}
+
+.table th, td {
+	border: black 2px solid;
+	border-collapse: collapse;
+	text-align: center;
+	padding: 10px;
+}
+
+.table th {
+	font-weight: bold;
+	background-color: pink;
+	font-size: 1.1em;
+}
+
+.table img {
+	vertical-align: middle;
+}

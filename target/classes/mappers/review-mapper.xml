@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="review">
+	<select id="review_cnt" resultType="int">
+		SELECT COUNT(*) FROM review
+	</select>
+	
+	<select id="review_list" parameterType="Map" resultType="reviewVO">
+		SELECT * FROM review ORDER BY groups DESC, lev ASC limit #{limit} offset #{offset}
+	</select>
+	
+	<insert id="review_insert" parameterType="reviewVO">
+		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
+            SELECT (IFNULL(MAX(review_idx),0)+1) as groups FROM review
+        </selectKey>
+        INSERT INTO review(u_idx, r_idx, review_category, review_subject, review_content, review_f_name, hit, groups, step, lev, regdate)
+		 VALUES(#{u_idx}, #{r_idx}, #{review_category}, #{review_subject}, #{review_content}, #{review_f_name}, 0, #{groups}, 0, 0, sysdate())
+	</insert>
+	
+	<update id="review_hit" parameterType="String">
+		UPDATE review SET hit = hit+1 WHERE review_idx = #{review_idx} 
+	</update>
+	
+	<select id="review_detail" parameterType="String" resultType="reviewVO">
+		SELECT * FROM review WHERE review_idx = #{review_idx}
+	</select>
+	
+	<update id="review_update" parameterType="reviewVO">
+		UPDATE review
+		 SET review_category = #{review_category}, review_subject = #{review_subject}, review_content = #{review_content}, review_f_name = #{review_f_name}
+		  WHERE review_idx = #{review_idx}
+	</update>
+	
+	<update id="review_lev_update" parameterType="Map">
+		UPDATE review SET lev=lev+1 WHERE groups=#{groups} and lev>=#{lev}
+	</update>
+	
+	<insert id="review_ans_ins" parameterType="reviewVO">
+		INSERT INTO review(u_idx, r_idx, review_category, review_subject, review_content, review_f_name, hit, groups, step, lev, regdate)
+		 VALUES(#{u_idx}, #{r_idx}, #{review_category}, #{review_subject}, #{review_content}, #{review_f_name}, 0, #{groups}, #{step}, #{lev}, sysdate())
+	</insert>
+	
+	<update id="review_delete" parameterType="reviewVO">
+		UPDATE review SET active =1 WHERE review_idx = #{review_idx}
+	</update>
+	
+	<delete id="review_ans_delete" parameterType="reviewVO">
+		DELETE FROM review WHERE review_idx = #{review_idx}
+	</delete>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+

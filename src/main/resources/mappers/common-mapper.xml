@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="common">
+
+	<!-- 장바구니 리스트 -->
+	<select id="basket_list" parameterType="String" resultType="basketVO">
+		SELECT b.b_idx, p.p_idx, p.p_name, p.p_num, p.p_price, b.p_size, b.quant, p.f_name
+		 FROM basket b 
+		 JOIN products p ON p.p_idx = b.p_idx 
+		 WHERE b.u_idx = #{u_idx}
+	</select>
+	
+	<!-- 옵션 리스트 -->
+	<select id="option_list" parameterType="String" resultType="optionVO">
+		SELECT * FROM option WHERE p_idx = #{p_idx}
+	</select>
+	
+	<!-- 장바구니 수량, 옵션 변경 -->
+	<update id="basket_QuantEdit" parameterType="basketVO">
+		UPDATE basket SET quant = #{quant}, p_size = #{p_size} WHERE b_idx = #{b_idx};
+	</update>
+
+	<!-- 장바구니 선택 삭제 -->
+	<delete id="basket_delete" parameterType="String">
+		DELETE FROM basket WHERE b_idx = #{b_idx}
+	</delete>
+	
+	<!-- 주소 리스트 -->
+	<select id="addr_list" parameterType="String" resultType="addrVO">
+		SELECT * FROM address WHERE u_idx = #{u_idx} and basic = 0
+	</select>
+	<!-- 기본 배송지 -->
+	<select id="addr_basic" parameterType="String" resultType="addrVO">
+		SELECT * FROM address WHERE u_idx = #{u_idx} and basic = 1
+	</select>
+	
+	<!-- 장바구니에서 선택한 상품 이미지들 가져오기 -->
+	<select id="proImg_list" parameterType="String" resultType="imgVO">
+		SELECT * FROM images WHERE p_idx = #{p_idx}
+	</select>
+	
+	<!-- 장바구니에서 선택한 상품 꺼내오기  -->
+	<select id="tempBasket_list" parameterType="String" resultType="basketVO">
+	    SELECT b.b_idx, p.p_idx, p.p_name, p.p_num, p.p_price, b.p_size, b.quant, p.f_name, b.o_idx
+	     FROM basket b 
+	     JOIN products p ON p.p_idx = b.p_idx 
+	     WHERE b.b_idx = #{b_idx}
+	</select>
+	
+	<insert id="Ajaxaddr_add" parameterType="tempOrderVO">
+		INSERT INTO
+		 address(zip_code, 
+		 <if test="roadAddr != null and roadAddr != ''">roadAddr, </if>
+		 <if test="jibunAddr != null and jibunAddr != ''">jibunAddr, </if>
+		 <if test="addrDetail != null and addrDetail != ''">addrDetail, </if>
+		 u_idx)
+		 VALUES(#{zip_code},
+		 <if test="roadAddr != null and roadAddr != ''">#{roadAddr}, </if>
+		 <if test="jibunAddr != null and jibunAddr != ''">#{jibunAddr}, </if>
+		 <if test="addrDetail != null and addrDetail != ''">#{addrDetail}, </if>
+		 #{u_idx}
+		 )
+	</insert>
+	
+	<select id="Ajaxaddr_list" parameterType="String" resultType="addrVO">
+		SELECT * FROM address WHERE u_idx = #{u_idx} ORDER BY addr_idx
+	</select>
+	
+	<update id="selected_delete" parameterType="String" >
+		update address 
+		 set selected = 0 
+		 where u_idx = #{u_idx} and selected = 1
+	</update>
+	<update id="selected_update" parameterType="addrVO" >
+		update address 
+		 set selected = 1 
+		 where addr_idx = #{addr_idx} 
+	</update>
+	
+	<insert id="orderPro_insert" parameterType="basketVO" >
+		INSERT INTO
+		 orders_pd(p_idx, order_p_quant, option_idx, regdate)
+		 VALUES(#{p_idx}, #{quant}, #{o_idx}, sysdate())
+	</insert>
+	
+	<select id="getLastInsertedIdx" resultType="String">
+		SELECT LAST_INSERT_ID();
+	</select>
+	
+	<insert id="order_insert" parameterType="tempOrderVO">
+		INSERT INTO
+		 orders(u_idx, addr_idx, option_idx, receiver_name, receiver_phone, order_price, order_pd_idx, order_date)
+		 VALUES(#{u_idx}, #{addr_idx}, #{option_idx}, #{receiver_name}, #{receiver_phone}, #{orderpriceTotal}, #{order_pd_idx} ,sysdate())
+	</insert>
+	
+	<select id="getSelectedAddr" parameterType="String" resultType="addrVO">
+		SELECT * FROM address WHERE selected = 1 AND u_idx = #{u_idx}
+	</select>
+	
+	<update id="userPointChange" parameterType="userVO">
+		UPDATE users SET u_point = #{u_point} WHERE u_idx = #{u_idx}
+	</update>
+	<delete id="OrderPro_delete" parameterType="basketVO">
+		DELETE FROM basket WHERE b_idx = #{b_idx}
+	</delete>
+	
+	<delete id="wish_delete" parameterType="wishVO">
+		DELETE FROM wishlist WHERE wish_idx = #{wish_idx} 
+	</delete>
+</mapper>

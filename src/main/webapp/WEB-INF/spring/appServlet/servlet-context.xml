@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<annotation-driven/>
+
+	<!-- HandlerMMapping : 요청에 따른 컨트롤러 클래스 지정 (일반적으로는 어노테이션 처리)  -->
+ 
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- 컨트롤러에서 리턴한 ModelAndView의 View name를 렌더링해준다.
+		완성된 View는 클라이언트에게 넘어간다.
+		if view name = result1 이라면 /WEB-INF/views/result1.jsp
+		if view name = admin/Result2 /WEB-INF/views/admin/Result2.jsps
+	 -->
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<context:component-scan base-package="com.ict"/>	
+	
+	<!-- 파일업로드용 클래스 등록 CMR -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+							<!-- 사이즈 제한 (1048576 => 1MB)-->
+		<beans:property name="maxUploadSize" value="104857600"></beans:property>
+							<!-- 한글처리 -->
+		<beans:property name="defaultEncoding" value="utf-8"></beans:property>
+	</beans:bean>
+
+	<!-- 로그인 인터셉터 -->
+	<beans:bean id="log_inter" class="com.ict.common.LoginInterceptor" />
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/mypage_page.do"/>
+			<mapping path="/basket_page.do"/>
+			<mapping path="/orderlist_page.do"/>
+			<mapping path="/purchaselist_page.do"/>
+			<mapping path="/purchase_ok.do"/>
+			<mapping path="/wishlist_page.do"/>
+			<mapping path="/update_page.do"/>
+			<mapping path="/addr_add.do"/>
+			<mapping path="/resign_page.do"/>
+			<mapping path="/resign_pwd.do"/>
+			<mapping path="/order_page.do"/>
+			
+			
+			<beans:ref bean="log_inter"/>
+		</interceptor>
+	</interceptors>	
+	
+</beans:beans>

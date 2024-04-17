@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+ <!-- parameterType은 dao에서 뭘로 가져왔느냐에 따라 달라짐. ex) String
+ 
+  -->
+ <mapper namespace="product">
+ 	<select id="selectList" parameterType="String" resultType="proVO">
+ 		select * from  products where p_category = #{p_category}
+ 	</select>
+ 	
+ 	<select id="productlist" parameterType="String" resultType="proVO">
+ 		select * from products where p_idx = #{p_idx}
+ 	</select>
+
+	<select id="producet_detail" parameterType="String" resultType="proVO">
+		select * from products where p_idx = #{p_idx}
+	</select>
+	
+	<select id="OptionList" parameterType="String" resultType="optionVO">
+		select * from option where p_idx = #{p_idx};
+	</select>
+	
+	<insert id="BasketList" parameterType="OrderVO">
+		insert into basket(u_idx, p_idx, quant, p_size ,o_idx) values(#{u_idx},#{p_idx},#{quant},#{p_size} ,#{o_idx});
+	</insert>
+	
+	<select id="option" parameterType="orderVO" resultType="optionVO">
+		select * from option where p_idx = #{p_idx} and p_size = #{p_size};
+	</select>
+
+ </mapper>

@@ -1,0 +1,31 @@
+.basket {
+  width: 100%;
+  min-height: calc(100vh - 120px);
+  position: relative;
+  text-align: center;
+}
+
+.basket > h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+.basket > table,
+.basket_table_head > th,
+.basket_table_body > td {
+  border: 1px solid black;
+  padding: 3px;
+}
+.basket > table {
+  border-collapse: collapse;
+  text-align: center;
+}
+.basket_table_head > th {
+  font-weight: bold;
+  font-size: 20px;
+}
+.basket > table {
+  margin: auto;
+  text-align: center;
+}

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="mypage">
+	
+	<select id="orderlist" parameterType="String" resultType="olvo">
+		select p.f_name, p.p_name, op.p_size, o.order_price, opd.order_p_quant, 
+				o.order_date, o.order_idx, p.p_category
+		from orders o 
+		join orders_pd opd on opd.order_pd_idx = o.order_pd_idx
+		join products p on p.p_idx = opd.p_idx 
+		join option op on op.option_idx = o.option_idx 
+		where o.u_idx = #{u_idx} and o.delivery_active = 0 
+	</select>
+	
+	<update id="delivery_active" parameterType="String">
+		update orders 
+		set delivery_active = 1 , purchase_date = sysdate() 
+		where order_idx = #{order_idx}
+	</update>
+	
+	<select id="purchaselist" parameterType="String" resultType="plvo">
+		select p.f_name, p.p_name, op.p_size, o.order_price, opd.order_p_quant, 
+				o.purchase_date, o.order_idx, o.review_active, p.p_category
+		from orders o 
+		join orders_pd opd on opd.order_pd_idx = o.order_pd_idx
+		join products p on p.p_idx = opd.p_idx 
+		join option op on op.option_idx = o.option_idx 
+		where o.u_idx = #{u_idx} and o.delivery_active = 1
+	</select>
+	
+	<select id="wishlist" parameterType="String" resultType="wlvo">
+		select p.f_name, p.p_name, p.p_price, w.wish_idx, p.p_category, p.p_idx
+		from wishlist w 
+		join products p on p.p_idx = w.p_idx 
+		where w.u_idx = #{u_idx}
+	</select>
+	
+	<delete id="wishlist_delete" parameterType="String">
+		delete from wishlist where wish_idx = #{wish_idx}
+	</delete>
+	
+	<resultMap type="userVO" id="user_detail">
+		<id column="u_idx" property="u_idx" />
+		<result column="u_name" property="u_name"/>
+		<result column="u_phone" property="u_phone" />
+		<result column="u_email" property="u_email" />
+		<result column="u_birth" property="u_birth" />
+		<result column="u_gender" property="u_gender" />
+		
+		<collection column="u_idx" javaType="java.util.List" ofType="AddressVO"
+		  property="addr_list" select="addr_list" />
+		
+	</resultMap>
+	
+	<select id="addr_list" parameterType="String" resultType="addrVO">
+		select * from address where u_idx = #{u_idx}
+	</select>
+	
+	<select id="detail" parameterType="String" resultMap="user_detail">
+		select * from users where u_idx = #{u_idx}
+	</select>
+	
+	<update id="update" parameterType="userVO">
+		update users 
+		set u_phone = #{u_phone}, u_email = #{u_email} 
+		where u_idx = #{u_idx}
+	</update>
+	
+	<update id="basic_delete" parameterType="String">
+		update address 
+		set basic = 0 
+		where u_idx = #{u_idx} and basic = 1
+	</update>
+	
+	<update id="basic_update" parameterType="String">
+		update address 
+		set basic = 1 
+		where addr_idx = #{addr_idx} 
+	</update>
+	
+	<delete id="addr_delete" parameterType="String">
+		delete from address where addr_idx = #{addr_idx}
+	</delete>
+	
+	<insert id="addr_insert" parameterType="addrVO">
+		insert into address(u_idx, zip_code, roadAddr, jibunAddr, addrDetail, regdate) 
+		values(#{u_idx}, #{zip_code}, #{roadAddr}, #{jibunAddr}, #{addrDetail}, sysdate())
+	</insert>
+	
+	<update id="resign" parameterType="String">
+		update users 
+		set active = 0 
+		where u_idx = #{u_idx}
+	</update>
+	
+	
+	
+	<!-- 찜 -->
+	<insert id="wish_insert" parameterType="Map">
+		insert into wishlist(p_idx,u_idx) values(#{p_idx},#{u_idx})
+	</insert>	
+<!-- 	
+	<update id="active_update" parameterType="Map">
+		update products set active = 1 where p_idx = #{p_idx}
+	</update>
+	 -->
+	<delete id="wish_delete" parameterType="Map">
+		delete from wishlist where p_idx = #{p_idx} and u_idx = #{u_idx}
+	</delete>
+<!-- 	
+	<update id="active_update2" parameterType="Map">
+		update products set active = 0 where p_idx = #{p_idx} 
+	</update>
+	 -->
+	<select id="cateWish_select" parameterType="String" resultType="wishVO">
+		SELECT * FROM wishlist WHERE u_idx = #{u_idx}
+	</select>
+	
+	
+	
+	
+</mapper>

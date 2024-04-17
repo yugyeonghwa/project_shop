@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="board">
+	<select id="qna_count" resultType="int">
+		SELECT COUNT(*) FROM posts 
+	</select>
+
+	<select id="qna_list" parameterType="Map" resultType="postVO">
+		SELECT * FROM posts ORDER BY groups DESC, lev ASC limit #{limit} offset #{offset}
+	</select>
+	
+	<insert id="qna_insert" parameterType="postVO">
+		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
+            SELECT (IFNULL(MAX(post_idx),0)+1) as groups FROM posts
+        </selectKey>
+		INSERT INTO posts(u_idx, p_idx, post_category, post_status, post_subject, post_content, post_f_name, hit, groups, step, lev, regdate)
+		 VALUES(#{u_idx}, #{p_idx}, #{post_category}, 0, #{post_subject}, #{post_content}, #{post_f_name}, 0, #{groups}, 0, 0, sysdate())
+	</insert>
+	
+	<select id="qna_detail" parameterType="String" resultType="postVO">
+		SELECT * FROM posts WHERE post_idx = #{post_idx}
+	</select>
+	
+	<update id="qna_update" parameterType="postVO">
+		UPDATE posts
+		 SET post_category = #{post_category}, post_subject = #{post_subject}, post_content = #{post_content}, post_f_name = #{post_f_name}
+		  WHERE post_idx = #{post_idx}
+	</update>
+	
+	<update id="qna_delete" parameterType="postVO">
+		UPDATE posts SET active = 1 WHERE post_idx = #{post_idx}
+	</update>
+	
+	<delete id="qna_ans_delete" parameterType="postVO">
+		DELETE FROM posts WHERE post_idx = #{post_idx}
+	</delete>
+	
+	<update id="qna_lev_update" parameterType="Map">
+		UPDATE posts 
+		 SET lev=lev+1 
+		  WHERE groups=#{groups} and lev>=#{lev}
+	</update>
+	
+	<update id="qna_status" parameterType="postVO">
+		UPDATE posts SET post_status = 1 WHERE post_idx = #{post_idx}
+	</update>
+	
+	<insert id="qna_ans_insert" parameterType="postVO">
+		INSERT INTO posts(u_idx, p_idx, post_category, post_status, post_subject, post_content, post_f_name, hit, groups, step, lev, regdate)
+		 VALUES(#{u_idx}, #{p_idx}, #{post_category}, 1, #{post_subject}, #{post_content}, #{post_f_name}, 0, #{groups}, #{step}, #{lev}, sysdate())
+	</insert>
+	
+	<update id="qna_hit" parameterType="String">
+		UPDATE posts SET hit = hit+1 WHERE post_idx = #{post_idx} 
+	</update>
+	
+</mapper>
+

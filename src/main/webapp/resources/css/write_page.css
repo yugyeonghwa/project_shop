@@ -1,0 +1,35 @@
+.write_table {
+  border: 1px solid black;
+  min-width: 1000px;
+  margin: 0 auto;
+}
+
+.write_table td {
+  border: 1px solid black;
+}
+.write_table input,
+.write_table textarea {
+  width: 99%;
+}
+.write_btn {
+  margin: 0 auto;
+
+  text-align: center;
+}
+.write_btn input {
+  margin-top: 10px;
+  width: 200px;
+  height: 30px;
+}
+
+.write h1 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.write_table_subject {
+  width: 100px;
+  text-align: center;
+  font-weight: bold;
+  padding: 5px;
+}

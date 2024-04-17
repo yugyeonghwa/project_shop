@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+/* 그리드 설정 */
+.wish {
+	width:60%;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-gap: 1rem;
+	margin: 20px auto;
+}
+
+.product {
+	text-align: center;
+	padding: 10px;
+	line-height: 1.5em;
+}
+
+.product>img {
+	width: 200px;
+	height: 200px;
+}
+
+.product>h2{
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+
+
+
+

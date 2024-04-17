@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<!-- MyBatis 에서 쿼리에 매핑되는 파라미터에 null 값이 있으면 에러발생 방지 -->
+		<setting name="jdbcTypeForNull" value="NULL" />
+		<!-- MyBatis 에서 캐싱기능 종료 -->
+		<setting name="cacheEnabled" value="false" />
+	</settings>
+	<typeAliases>
+		<!-- 별칭설정 -->
+		<typeAlias type="com.ict.common.dao.OrderVO" alias="orderVO" />
+		<typeAlias type="com.ict.common.dao.AddressVO" alias="addrVO" />
+		<typeAlias type="com.ict.common.dao.OptionVO" alias="optionVO" />
+		<typeAlias type="com.ict.common.dao.FaqVO" alias="faqVO" />
+		<typeAlias type="com.ict.common.dao.ProductVO" alias="proVO" />
+		<typeAlias type="com.ict.common.dao.PostVO" alias="postVO" />
+		<typeAlias type="com.ict.common.dao.Pro_ImgVO" alias="imgVO" />
+		<typeAlias type="com.ict.common.dao.UserVO" alias="userVO" />
+		<typeAlias type="com.ict.common.dao.WishVO" alias="wishVO" />
+
+		<typeAlias type="com.ict.common.dao.ReviewVO" alias="reviewVO" />
+		<typeAlias type="com.ict.common.dao.ReportVO" alias="reportVO" />
+
+		<typeAlias type="com.ict.common.dao.BasketVO" alias="basketVO" />
+		<typeAlias type="com.ict.common.dao.Order_pdVO" alias="order_pdVO" />
+		
+		<!-- 마이페이지 -->
+		<typeAlias type="com.ict.mypage.dao.OrderListVO" alias="olvo" />
+		<typeAlias type="com.ict.mypage.dao.PurchaseListVO" alias="plvo" />
+		<typeAlias type="com.ict.mypage.dao.WishListVO" alias="wlvo" />
+		
+		<typeAlias type="com.ict.order.dao.TempOrderVO" alias="tempOrderVO" />
+
+
+
+	</typeAliases>
+	<mappers>
+		<!-- 매퍼 -->
+		<mapper resource="mappers/mypage-mapper.xml" />
+		<mapper resource="mappers/order-mapper.xml" />
+
+		<mapper resource="mappers/board-mapper.xml" />
+		<mapper resource="mappers/faq-mapper.xml" />
+		<mapper resource="mappers/review-mapper.xml" />
+		<mapper resource="mappers/report-mapper.xml" />
+
+		<mapper resource="mappers/users-mapper.xml" />
+		<mapper resource="mappers/common-mapper.xml" />
+
+		<mapper resource="mappers/product-mapper.xml"/>
+
+		<!-- 자기꺼 알아서 연결 -->
+	</mappers>
+</configuration>

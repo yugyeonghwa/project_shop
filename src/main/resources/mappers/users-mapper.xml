@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="users">
+	<insert id="signup" parameterType="userVO">
+		insert into users(u_id, u_pwd, u_name, u_phone, u_email, u_birth, u_gender)
+		value(#{u_id}, #{u_pwd}, #{u_name}, #{u_phone}, #{u_email}, #{u_birth}, #{u_gender})
+	</insert>
+	
+	<insert id="signup_addr" parameterType="addrVO">
+		insert into address(u_idx, zip_code, roadAddr, jibunAddr, addrDetail, basic, selected)
+		value(#{u_idx}, #{zip_code}, #{roadAddr}, #{jibunAddr}, #{addrDetail}, 1, 1)
+	</insert>
+	
+	<select id="user_info" parameterType="String" resultType="userVO">
+		select * from users where u_id = #{u_id}
+	</select>
+	
+	<select id="idchk" parameterType="String" resultType="int">
+		select count(*) from users where u_id=#{u_id} 
+	</select>
+	
+	<select id="login" parameterType="userVO" resultType="userVO">
+		SELECT * FROM users WHERE u_id = #{u_id} and active=1
+	</select>
+	
+	<update id="repwd" parameterType="userVO">
+		update users set u_pwd = #{u_pwd} where u_id = #{u_id}
+	</update>
+	
+	<select id="id_find" parameterType="String" resultType="userVO">
+		select * from users where u_email = #{u_email} 
+	</select>
+	
+</mapper>

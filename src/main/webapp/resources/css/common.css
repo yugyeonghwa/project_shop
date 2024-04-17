@@ -1,0 +1,150 @@
+/* 초기화용 reset.css */
+@import "./reset.css";
+/* 바디 화면 전체 크기 잡아줌*/
+body {
+  position: relative;
+  min-width: 1903px;
+  min-height: calc(100vh - 120px);
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+/* 헤더를 맨위에서 따라다니게 */
+header {
+  position: sticky;
+  top: 0px;
+  width: 100%;
+  min-width: 1903px;
+  background-color: white;
+  z-index: 999;
+}
+
+/* 헤더 내에서 로고, 유틸, 카테고리 배치용 */
+header .inner {
+  width: 1180px;
+  height: 120px;
+  /*자식 absolute 요소의 기준점 설정*/
+  position: relative;
+  left: 300px;
+}
+
+/* 로고 */
+header .inner .logo {
+  position: absolute;
+  left: 50px;
+  width: 200px;
+  height: 100%;
+  background-color: aqua;
+  opacity: 0.5;
+  text-align: center;
+}
+
+header .inner .logo > h1 {
+  margin: 50px;
+  font-weight: bold;
+  font-size: 24px;
+  font-family: "arial";
+}
+
+/* 헤더 우상단 유틸 */
+header .inner .util {
+  position: absolute;
+  top: 20px;
+  right: 0px;
+}
+
+header .inner .util ul > li {
+  margin: 0px 5px;
+}
+
+header .inner .h_search_form {
+  position: absolute;
+  top: 50px;
+  right: 0px;
+}
+
+header .inner .util .info > li {
+  float: left;
+}
+
+header .inner .util .search > li {
+  float: right;
+}
+
+header .inner .util li > a {
+  font: 12px "arial";
+}
+
+/* 헤더 카테고리 */
+header .inner .gnb_wrapper {
+  width: 100%;
+  height: inherit;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+header .inner .gnb {
+  position: absolute;
+  bottom: 0px;
+  left: 300px;
+}
+
+header .inner .gnb .category {
+  float: left;
+  display: block;
+  border-left: none;
+}
+
+/* header .inner .gnb .category:nth-of-type(1) {
+  border: 1px solid black;
+} */
+
+header .inner .gnb .category_detail {
+  width: 400px;
+  height: 300px;
+  display: none;
+}
+
+header .inner .gnb .category > a {
+  /* 인라인 요소를 block으로 바꿔서 크기 설정 */
+  display: block;
+  font: bold 15px "arial";
+  color: #555;
+  padding: 20px 10px;
+  text-align: left;
+  /* 애니메이션 효과  */
+  transition: all 0.5s;
+}
+
+header .inner .gnb .category > a:hover {
+  background: #555;
+  color: #fff;
+}
+
+section {
+  width: 100%;
+  min-height: calc(100vh - 120px);
+  padding-bottom: 220px;
+}
+
+footer {
+  width: 100%;
+  height: 220px;
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+  background-color: gray;
+}
+
+footer > div {
+  margin: 5px;
+}
+
+footer > div > h1 {
+  font-size: 30px;
+  color: black;
+  font-weight: bold;
+}

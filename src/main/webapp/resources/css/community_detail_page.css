@@ -1,0 +1,32 @@
+.detail_table {
+  border: 1px solid black;
+  min-width: 1000px;
+  margin: 0 auto;
+}
+
+.detail_table td {
+  border: 1px solid black;
+}
+
+.detail_btn {
+  margin: 0 auto;
+
+  text-align: center;
+}
+.detail_btn input {
+  margin-top: 10px;
+  width: 200px;
+  height: 30px;
+}
+
+.detail h1 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.detail_table_subject {
+  width: 100px;
+  text-align: center;
+  font-weight: bold;
+  padding: 5px;
+}

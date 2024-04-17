@@ -1,0 +1,61 @@
+#sign_wrap>h1 {
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+	padding-bottom: 30px;
+}
+
+#sign_wrap>p {
+	text-align: center;
+	margin-left: 870px;
+	margin-bottom: 10px;
+}
+
+table {
+	width: 1000px;
+	/* position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%); */
+	margin: 0 auto;
+	margin-bottom: 50px;
+}
+
+table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+	padding: 15px;
+	text-align: left;
+	
+}
+
+#box_1 input[type="text"],
+#box_1 input[type="password"],
+#box_1 input[type="email"] {
+	height: 25px;
+}
+
+
+#zip-code, #address-1, #address-1-1, #address-2 {
+	margin-bottom: 3px;
+}
+
+
+.p_box p {
+	line-height: 1.5;
+    overflow-y: auto; 
+    max-height: 100px;
+    border: 1px solid lightgray;
+    padding: 10px;
+    margin: 15px 0px 15px;
+}
+
+#box_3 {
+	text-align: center;
+}
+
+#but_sign {
+	width: 150px;
+	height: 50px;
+	margin-bottom: 150px;
+	font-size: 20px;
+	
+}
